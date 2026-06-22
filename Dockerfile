@@ -1,15 +1,10 @@
-FROM ghcr.io/cirruslabs/flutter:stable AS build
+FROM ghcr.io/cirruslabs/flutter:stable
 
 WORKDIR /app
 
 COPY . .
 
 RUN flutter pub get
-
 RUN flutter build web
 
-FROM nginx:alpine
-
-COPY --from=build /app/build/web /usr/share/nginx/html
-
-EXPOSE 80
+CMD ["python3","-m","http.server","8080","--directory","build/web"]
