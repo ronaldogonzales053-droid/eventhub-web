@@ -5,275 +5,409 @@ import 'register_screen.dart';
 import 'eventos_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-const LoginScreen({super.key});
+  const LoginScreen({super.key});
 
-@override
-Widget build(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
 
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
 
-final emailController =
-TextEditingController();
+    return Scaffold(
 
-final passwordController =
-TextEditingController();
+      body: Container(
 
-return Scaffold(
+        decoration: const BoxDecoration(
 
-body: Container(
+          image: DecorationImage(
 
-decoration: const BoxDecoration(
-gradient: LinearGradient(
-colors: [
-Color(0xFF4A148C),
-Color(0xFF7B1FA2),
-],
-begin: Alignment.topCenter,
-end: Alignment.bottomCenter,
-),
-),
+            image: AssetImage(
+              "assets/images/login_bg.jpg",
+            ),
 
-child: Center(
+            fit: BoxFit.cover,
 
-child: SingleChildScrollView(
+          ),
 
-child: Container(
+        ),
 
-width: 400,
+        child: Container(
 
-padding:
-const EdgeInsets.all(25),
+          color: Colors.black.withOpacity(0.65),
 
-margin:
-const EdgeInsets.all(20),
+          child: Center(
 
-decoration: BoxDecoration(
-color: Colors.white,
+            child: SingleChildScrollView(
 
-borderRadius:
-BorderRadius.circular(25),
+              child: Container(
 
-boxShadow: const [
-BoxShadow(
-color: Colors.black12,
-blurRadius: 15,
-)
-],
-),
+                width: 500,
 
-child: Column(
-mainAxisSize:
-MainAxisSize.min,
+                padding: const EdgeInsets.all(35),
 
-children: [
+                margin: const EdgeInsets.all(20),
 
-const Icon(
-Icons.event_available,
-size: 80,
-color: Colors.deepPurple,
-),
+                decoration: BoxDecoration(
 
-const SizedBox(height: 10),
+                  color: Colors.white.withOpacity(0.95),
 
-const Text(
-"EVENTHUB",
-style: TextStyle(
-fontSize: 30,
-fontWeight:
-FontWeight.bold,
-),
-),
+                  borderRadius:
+                  BorderRadius.circular(30),
 
-const SizedBox(height: 5),
+                  boxShadow: const [
 
-const Text(
-"Inicia sesión para continuar",
-style: TextStyle(
-color: Colors.grey,
-),
-),
+                    BoxShadow(
 
-const SizedBox(height: 30),
+                      color: Colors.black26,
 
-TextField(
+                      blurRadius: 25,
 
-controller:
-emailController,
+                      offset: Offset(0, 10),
 
-decoration:
-InputDecoration(
+                    ),
 
-labelText:
-"Correo",
+                  ],
 
-prefixIcon:
-const Icon(
-Icons.email,
-),
+                ),
 
-border:
-OutlineInputBorder(
-borderRadius:
-BorderRadius.circular(
-15),
-),
-),
-),
+                child: Column(
 
-const SizedBox(height: 15),
+                  mainAxisSize: MainAxisSize.min,
 
-TextField(
+                  children: [
 
-controller:
-passwordController,
+                    Container(
 
-obscureText: true,
+                      padding: const EdgeInsets.all(20),
 
-decoration:
-InputDecoration(
+                      decoration: BoxDecoration(
 
-labelText:
-"Contraseña",
+                        color:
+                        Colors.deepPurple.shade100,
 
-prefixIcon:
-const Icon(
-Icons.lock,
-),
+                        shape: BoxShape.circle,
 
-border:
-OutlineInputBorder(
-borderRadius:
-BorderRadius.circular(
-15),
-),
-),
-),
+                      ),
 
-const SizedBox(height: 25),
+                      child: const Icon(
 
-  SizedBox(
+                        Icons.event_available,
 
-  width: double.infinity,
-  height: 55,
+                        size: 70,
 
-  child: ElevatedButton(
+                        color: Colors.deepPurple,
 
-  onPressed: () async {
+                      ),
 
-  final result =
-  await ApiService.login(
-  emailController.text,
-  passwordController.text,
-  );
+                    ),
 
-  if(result["success"] == true){
+                    const SizedBox(height: 20),
 
-  final usuario =
-  result["usuario"];
+                    const Text(
 
-  Session.guardarUsuario(
+                      "EVENTHUB",
 
-  int.parse(
-  usuario["id"]
-      .toString(),
-  ),
+                      style: TextStyle(
 
-  usuario["nombre"]
-  ?? "",
+                        fontSize: 42,
 
-  usuario["email"]
-  ?? "",
+                        fontWeight: FontWeight.bold,
 
-  usuario["rol"]
-  ?? "cliente",
+                        letterSpacing: 2,
 
-  );
+                      ),
 
-  ScaffoldMessenger.of(
-  context)
-      .showSnackBar(
+                    ),
 
-  const SnackBar(
-  content: Text(
-  "Bienvenido a EventHub",
-  ),
-  ),
-  );
+                    const SizedBox(height: 10),
 
-  Navigator.pushReplacement(
-  context,
-  MaterialPageRoute(
-  builder: (_) =>
-  const EventosScreen(),
-  ),
-  );
+                    const Text(
 
-  }else{
+                      "Descubre • Reserva • Vive",
 
-  ScaffoldMessenger.of(
-  context)
-      .showSnackBar(
+                      style: TextStyle(
 
-  SnackBar(
-  content: Text(
-  result["message"] ??
-  "Error de login",
-  ),
-  ),
-  );
+                        fontSize: 18,
+
+                        color: Colors.deepPurple,
+
+                        fontWeight: FontWeight.w500,
+
+                      ),
+
+                    ),
+
+                    const SizedBox(height: 30),
+
+                    TextField(
+
+                      controller: emailController,
+
+                      decoration: InputDecoration(
+
+                        hintText:
+                        "Correo electrónico",
+
+                        prefixIcon: const Icon(
+
+                          Icons.email_outlined,
+
+                          color: Colors.deepPurple,
+
+                        ),
+
+                        filled: true,
+
+                        fillColor:
+                        Colors.grey.shade100,
+
+                        border:
+                        OutlineInputBorder(
+
+                          borderRadius:
+                          BorderRadius.circular(
+                            18,
+                          ),
+
+                          borderSide:
+                          BorderSide.none,
+
+                        ),
+
+                      ),
+
+                    ),
+
+                    const SizedBox(height: 15),
+
+                    TextField(
+
+                      controller:
+                      passwordController,
+
+                      obscureText: true,
+
+                      decoration:
+                      InputDecoration(
+
+                        hintText:
+                        "Contraseña",
+
+                        prefixIcon:
+                        const Icon(
+
+                          Icons.lock_outline,
+
+                          color:
+                          Colors.deepPurple,
+
+                        ),
+
+                        filled: true,
+
+                        fillColor:
+                        Colors.grey.shade100,
+
+                        border:
+                        OutlineInputBorder(
+
+                          borderRadius:
+                          BorderRadius.circular(
+                            18,
+                          ),
+
+                          borderSide:
+                          BorderSide.none,
+
+                        ),
+
+                      ),
+
+                    ),
+
+                    const SizedBox(height: 25),
+
+                    SizedBox(
+
+                      width: double.infinity,
+
+                      height: 60,
+
+                      child: ElevatedButton(
+
+                        onPressed: () async {
+
+                          final result =
+                          await ApiService.login(
+
+                            emailController.text,
+
+                            passwordController.text,
+
+                          );
+
+                          if(result["success"] == true){
+
+                            final usuario =
+                            result["usuario"];
+
+                            Session.guardarUsuario(
+
+                              int.parse(
+                                usuario["id"]
+                                    .toString(),
+                              ),
+
+                              usuario["nombre"]
+                                  ?? "",
+
+                              usuario["email"]
+                                  ?? "",
+
+                              usuario["rol"]
+                                  ?? "cliente",
+
+                            );
+
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(
+
+                              const SnackBar(
+
+                                content: Text(
+                                  "Bienvenido a EventHub",
+                                ),
+
+                              ),
+
+                            );
+
+                            Navigator.pushReplacement(
+
+                              context,
+
+                              MaterialPageRoute(
+
+                                builder: (_) =>
+                                const EventosScreen(),
+
+                              ),
+
+                            );
+
+                          } else {
+
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(
+
+                              SnackBar(
+
+                                content: Text(
+
+                                  result["message"]
+                                      ?? "Error de login",
+
+                                ),
+
+                              ),
+
+                            );
+
+                          }
+
+                        },
+
+                        style:
+                        ElevatedButton.styleFrom(
+
+                          backgroundColor:
+                          const Color(0xFF6A1B9A),
+
+                          elevation: 10,
+
+                          shape:
+                          RoundedRectangleBorder(
+
+                            borderRadius:
+                            BorderRadius.circular(
+                              20,
+                            ),
+
+                          ),
+
+                        ),
+
+                        child: const Text(
+
+                          "Iniciar Sesión",
+
+                          style: TextStyle(
+
+                            fontSize: 20,
+
+                            color: Colors.white,
+
+                            fontWeight:
+                            FontWeight.bold,
+
+                          ),
+
+                        ),
+
+                      ),
+
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    TextButton(
+
+                      onPressed: () {
+
+                        Navigator.push(
+
+                          context,
+
+                          MaterialPageRoute(
+
+                            builder: (_) =>
+                            const RegisterScreen(),
+
+                          ),
+
+                        );
+
+                      },
+
+                      child: const Text(
+
+                        "¿No tienes cuenta? Regístrate",
+
+                        style: TextStyle(
+                          fontSize: 16,
+                        ),
+
+                      ),
+
+                    ),
+
+                  ],
+
+                ),
+
+              ),
+
+            ),
+
+          ),
+
+        ),
+
+      ),
+
+    );
+
   }
-  },
-
-  style:
-  ElevatedButton.styleFrom(
-
-  backgroundColor:
-  Colors.deepPurple,
-
-  shape:
-  RoundedRectangleBorder(
-  borderRadius:
-  BorderRadius.circular(
-  15),
-  ),
-  ),
-
-  child: const Text(
-  "Iniciar Sesión",
-  style: TextStyle(
-  fontSize: 18,
-  color: Colors.white,
-  ),
-  ),
-  ),
-  ),
-
-  const SizedBox(height: 20),
-
-  TextButton(
-
-  onPressed: () {
-
-  Navigator.push(
-  context,
-  MaterialPageRoute(
-  builder: (_) =>
-  const RegisterScreen(),
-  ),
-  );
-  },
-
-  child: const Text(
-  "¿No tienes cuenta? Regístrate",
-  ),
-  ),
-  ],
-  ),
-  ),
-  ),
-  ),
-  ),
-  );
-
-
-}
 }
