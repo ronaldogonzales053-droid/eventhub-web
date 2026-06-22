@@ -11,6 +11,13 @@ FROM nginx:alpine
 
 COPY --from=build /app/build/web /usr/share/nginx/html
 
-EXPOSE 80
+RUN echo 'server { \
+listen $PORT; \
+location / { \
+root /usr/share/nginx/html; \
+index index.html; \
+try_files $uri $uri/ /index.html; \
+} \
+}' > /etc/nginx/conf.d/default.conf
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx","-g","daemon off;"]
