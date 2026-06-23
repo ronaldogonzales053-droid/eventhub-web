@@ -260,4 +260,36 @@ class ApiService {
 
     return data["data"];
   }
+  static Future<List<dynamic>>
+  obtenerHistorialPagos(
+      int usuarioId,
+      ) async {
+
+    final response =
+    await http.post(
+
+      Uri.parse(
+        "$baseUrl/historial_pagos.php",
+      ),
+
+      headers: {
+        "Content-Type":
+        "application/json",
+      },
+
+      body: jsonEncode({
+
+        "usuario_id":
+        usuarioId,
+
+      }),
+
+    );
+
+    final data =
+    jsonDecode(response.body);
+
+    return data["data"];
+
+  }
 }
